@@ -31,10 +31,18 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 		
 		String[] keyValueArray = getKeyAndValueFromJson(line);
 		
+		boolean jsonkeyaskey = context.getConfiguration().getBoolean("jsonKeyasKey", true);
+		
+		if(jsonkeyaskey){
 		if(keyValueArray[0].equals(fixedParam)){
 			
 			context.write(new Text(keyValueArray[0]), new Text(keyValueArray[1]));
 			
+		}
+		} else {
+			if(keyValueArray[1].equals(fixedParam)){
+				context.write(new Text(keyValueArray[1]), new Text(keyValueArray[0]));
+			}
 		}
 		
 		/*

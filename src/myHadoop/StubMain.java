@@ -18,8 +18,10 @@ public class StubMain {public static void main(String[] args) throws Exception {
 	}
 	*/
 	
+	boolean jsonKeyasKey=true;
 	Configuration conf = new Configuration();
-	conf.setStrings("fixedParam", "hadoop,second");
+	conf.setStrings("fixedParam", "exists,second");
+	conf.setBoolean("jsonKeyasKey", false);
 	
 	
 	Job job = new Job(conf);
