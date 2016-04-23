@@ -26,7 +26,10 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 		// perform a context write of Text,Text.
 		
 		String[] stringArr = context.getConfiguration().getStrings("fixedParam");
-		String fixedParam = stringArr[0];
+		
+		// TODO: provide support for multiple parameters.
+		
+		//String fixedParam = stringArr[0];
 		
 		
 		String[] keyValueArray = getKeyAndValueFromJson(line);
@@ -36,8 +39,9 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 		
 		
 		if(jsonkeyaskey){
-		if(keyValueArray[0].equals(fixedParam)){
-			
+		
+		//	if(keyValueArray[0].equals(fixedParam)){
+			if(   checkForMultipleValues(keyValueArray[0],stringArr) ){
 			if(writeFrequency){
 				// count the frequency of occurences.
 				context.write(new Text(keyValueArray[0]), new Text(1 + ""));	
@@ -47,8 +51,10 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 			}
 		}
 		} else {
-			if(keyValueArray[1].equals(fixedParam)){
-				
+			//if(keyValueArray[1].equals(fixedParam)){
+			
+			if(checkForMultipleValues(keyValueArray[1],stringArr)){
+			
 				if(writeFrequency){
 					context.write(new Text(keyValueArray[1]), new Text(1 + ""));	
 				} else {
@@ -74,6 +80,14 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 		}
 	*/
 	
+	}
+	
+	public boolean checkForMultipleValues(String valueToCheck, String[] array) {
+		for(String each : array){
+			if(valueToCheck.equals(each))
+				return true;
+		}
+		return false;
 	}
 	
 	
