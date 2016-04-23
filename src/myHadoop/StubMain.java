@@ -34,7 +34,7 @@ public class StubMain {public static void main(String[] args) throws Exception {
 	job.setMapperClass(StubMapper.class);
 	job.setReducerClass(StubReducer.class);
 	job.setOutputKeyClass(Text.class);
-	job.setOutputValueClass(IntWritable.class);
+	job.setOutputValueClass(Text.class);
 	System.exit(job.waitForCompletion(true) ? 0 : 1);
 }
 }

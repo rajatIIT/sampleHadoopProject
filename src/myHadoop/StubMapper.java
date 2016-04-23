@@ -14,7 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class StubMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 	private static final int MISSING = 9999;
 
 	@Override
@@ -33,7 +33,7 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 		
 		if(keyValueArray[0].equals(fixedParam)){
 			
-			context.write(new Text(keyValueArray[0]), new IntWritable(1));
+			context.write(new Text(keyValueArray[0]), new Text(keyValueArray[1]));
 			
 		}
 		
