@@ -11,14 +11,17 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class StubMain {public static void main(String[] args) throws Exception {
-	if (args.length != 2) {
+/*	if (args.length != 2) {
 		System.err
 				.println("Usage: MaxTemperature <input path> <output path>");
 		System.exit(-1);
 	}
+	*/
 	
 	Configuration conf = new Configuration();
-	conf.setInt("textValue", 8);
+	conf.setStrings("fixedParam", "hadoop,second");
+	
+	
 	Job job = new Job(conf);
 	job.setJarByClass(StubMain.class);
 	job.setJobName("Max temperature");

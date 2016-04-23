@@ -13,13 +13,11 @@ public class StubReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 	@Override
 	public void reduce(Text key, Iterable<IntWritable> values, Context context)
 			throws IOException, InterruptedException {
-		int maxValue = Integer.MIN_VALUE;
+		int maxValue = 0;
 		for (IntWritable value : values) {
-		//	maxValue = Math.max(maxValue, value.get());
-			int val = context.getConfiguration().getInt("textValue", 0);
-			context.write(key, new IntWritable(val));
-			context.write(key, new IntWritable(value.get()));
+			maxValue = maxValue +  value.get();
 		}
+		context.write(key, new IntWritable(maxValue));
 		
 	}
 }
