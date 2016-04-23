@@ -16,7 +16,10 @@ public class StubMain {public static void main(String[] args) throws Exception {
 				.println("Usage: MaxTemperature <input path> <output path>");
 		System.exit(-1);
 	}
-	Job job = new Job();
+	
+	Configuration conf = new Configuration();
+	conf.setInt("textValue", 8);
+	Job job = new Job(conf);
 	job.setJarByClass(StubMain.class);
 	job.setJobName("Max temperature");
 	

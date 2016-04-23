@@ -16,6 +16,8 @@ public class StubReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 		int maxValue = Integer.MIN_VALUE;
 		for (IntWritable value : values) {
 		//	maxValue = Math.max(maxValue, value.get());
+			int val = context.getConfiguration().getInt("textValue", 0);
+			context.write(key, new IntWritable(val));
 			context.write(key, new IntWritable(value.get()));
 		}
 		
