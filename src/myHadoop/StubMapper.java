@@ -32,17 +32,30 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 		String[] keyValueArray = getKeyAndValueFromJson(line);
 		
 		boolean jsonkeyaskey = context.getConfiguration().getBoolean("jsonKeyasKey", true);
+		boolean writeFrequency = context.getConfiguration().getBoolean("writeFrequencyOrValue", false);
+		
 		
 		if(jsonkeyaskey){
 		if(keyValueArray[0].equals(fixedParam)){
 			
+			if(writeFrequency){
+				// count the frequency of occurences.
+				context.write(new Text(keyValueArray[0]), new Text(1 + ""));	
+			} else {
+			// just write the value.
 			context.write(new Text(keyValueArray[0]), new Text(keyValueArray[1]));
-			
+			}
 		}
 		} else {
 			if(keyValueArray[1].equals(fixedParam)){
+				
+				if(writeFrequency){
+					context.write(new Text(keyValueArray[1]), new Text(1 + ""));	
+				} else {
+				
 				context.write(new Text(keyValueArray[1]), new Text(keyValueArray[0]));
-			}
+				}
+				}
 		}
 		
 		/*

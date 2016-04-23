@@ -20,9 +20,10 @@ public class StubMain {public static void main(String[] args) throws Exception {
 	
 	boolean jsonKeyasKey=true;
 	Configuration conf = new Configuration();
-	conf.setStrings("fixedParam", "exists,second");
+	conf.setStrings("fixedParam", "exists");
 	conf.setBoolean("jsonKeyasKey", false);
-	
+	// writes frequency if true
+	conf.setBoolean("writeFrequencyOrValue", true);
 	
 	Job job = new Job(conf);
 	job.setJarByClass(StubMain.class);
