@@ -20,8 +20,12 @@ public class StubMain {public static void main(String[] args) throws Exception {
 	
 	boolean jsonKeyasKey=true;
 	Configuration conf = new Configuration();
-	conf.setStrings("fixedParam", "exists,yes");
-	conf.setBoolean("jsonKeyasKey", false);
+	String[] array = new String[1];
+	array[0]= "*NSYNC";
+	conf.setStrings("fixedParam", array );
+	
+	// if true, we are operating on the key as opposed to value.
+	conf.setBoolean("jsonKeyasKey", true);
 	// writes frequency if true
 	conf.setBoolean("writeFrequencyOrValue", false);
 	
