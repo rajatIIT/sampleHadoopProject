@@ -19,7 +19,13 @@ package myHadoop.appTasks;
  *   1) Calculate Ma : The set of movies that correspond to the list of actors. 
  *   2) Calculate Mg : The set of movies that correspond to the list of genres 
  *   3) Mr = Ma intersection Mg.
+ *   	-> Perform union on the two lists.
+ *   	-> Execute a mapreduce job on the union counting the number of common lines. 
+ *   	-> Use output of this job as the "union without duplicates". 
+ *   
  *   4) Now execute a frequency run on Mr.
+ *   
+ *   Task : static list intersection.
  * 
  * 	@author rajatpawar
  *

@@ -22,7 +22,7 @@ public class StubMain {public static void main(String[] args) throws Exception {
 	Configuration conf = new Configuration();
 	String[] array = new String[1];
 	array[0]= "*NSYNC";
-	conf.setStrings("fixedParam", array );
+	conf.setStrings("fixedParam", array);
 	
 	// if true, we are operating on the key as opposed to value.
 	conf.setBoolean("jsonKeyasKey", true);
