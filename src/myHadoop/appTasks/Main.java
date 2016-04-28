@@ -26,6 +26,21 @@ package myHadoop.appTasks;
  *   4) Now execute a frequency run on Mr.
  *   
  *   Task : static list intersection.
+ *   
+ *   
+ *   -> The task of creating movies file from the actors list given a set is performed 
+ *   	StubMapper and StubReducer given right params. 
+ *   -> Use StubMapper and StubReducer to compute the movies list from actor/actress json file. 
+ *   	Put this movie list computation logic into two separate classes specific for actors an actresses.
+ *  	Write a similar computation logic for genres.
+ *   	create a class on top of these two classes which uses these classes depending on the
+ *      fixed params to compute the final movie list Mf.
+ *      
+ *      Remove duplicates from Mf.
+ *      
+ *         Now execute a frequency run on Mf using StubMapper and StubReducer to compute frequency
+ *         or the value list of the optimizing parameter. This list is the result.  
+ *  
  * 
  * 	@author rajatpawar
  *

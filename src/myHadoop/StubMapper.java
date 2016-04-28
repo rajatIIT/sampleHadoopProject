@@ -58,8 +58,7 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 				if(writeFrequency){
 					context.write(new Text(keyValueArray[1]), new Text(1 + ""));	
 				} else {
-				
-				context.write(new Text(keyValueArray[1]), new Text(keyValueArray[0]));
+					context.write(new Text(keyValueArray[1]), new Text(keyValueArray[0]));
 				}
 				}
 		}
