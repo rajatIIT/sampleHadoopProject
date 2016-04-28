@@ -149,16 +149,19 @@ public class StubMain {
 		
 		List<CSVRecord> listOfRecords = CSVParser.parse(args[i+1], CSVFormat.DEFAULT).getRecords();
 		
-		String[] paramArray = new String[listOfRecords.size()];
+		CSVRecord currentRecord = listOfRecords.get(0);
+		
+		String[] paramArray = new String[currentRecord.size()];
 		
 		// this CSVRecord contains all the elements of single array : listOfRecords.get(0).
-		int arraySize = listOfRecords.get(0).size();
+		
+		int arraySize = currentRecord.size();
 		LOG.info("Size of records for " + args[i] + " is " + arraySize);
-		LOG.info(listOfRecords.get(0).toMap().keySet().toString());
+		LOG.info("Input Record: " +  currentRecord);
 	//	int index=0;
 		
 		for(int j=0;j<arraySize;j++){
-			paramArray[j] = listOfRecords.get(0).get(j);
+			paramArray[j] = currentRecord.get(j);
 			
 		//paramArray[index]=eachRecord.get(1).toString();
 	//	index++;
