@@ -54,7 +54,8 @@ public class StubMain {
 	static String actressPath = "s3://moviebuzz/rajat/imdb/data/pub/misc/movies/database/actresses.json";
 	static String grossPath = "s3://moviebuzz/rajat/imdb/data/pub/misc/movies/database/business.json";
 	static String genresPath = "s3://moviebuzz/rajat/imdb/data/pub/misc/movies/database/genres.json";
-
+	static String[] transferArray;
+	
 	static HashMap<String, String[]> fixedParamMap = new HashMap<>();
 	private static final Log LOG = LogFactory.getLog(StubMain.class);
 
@@ -155,7 +156,12 @@ public class StubMain {
 			optimizingParamName = args[2];
 			outputType = args[3];
 
-			for (int i = 4; i < (args.length - 1); i = i + 2) {
+			actorsPath = args[4];
+			actressPath = args[5];
+			grossPath = args[6];
+			genresPath = args[7];
+
+			for (int i = 8; i < (args.length - 1); i = i + 2) {
 
 				List<CSVRecord> listOfRecords = CSVParser.parse(args[i + 1], CSVFormat.DEFAULT)
 						.getRecords();
@@ -248,13 +254,22 @@ public class StubMain {
 					String[] actorArray;
 					if (actors) {
 						actorArray = fixedParamMap.get("actor");
+						for(int i=0;i<actorArray.length;i++){
+							actorArray[i] = actorArray[i].trim();
+							LOG.info("ReadArray " + i  + " " + actorArray[i]);
+						}
 						LOG.info("Read actor set : " + Arrays.toString(actorArray));
 					} else {
 						actorArray = fixedParamMap.get("actress");
+						for(int i=0;i<actorArray.length;i++){
+							actorArray[i] = actorArray[i].trim();
+							LOG.info("ReadArray " + i  + " " + actorArray[i]);
+						}
 						LOG.info("Read actress set : " + Arrays.toString(actorArray));
 					}
 
 					conf.setStrings("fixedParam", actorArray);
+					transferArray=actorArray;
 
 					LOG.info("Creating job for actors.");
 					LOG.info("Actors" + actors);
@@ -368,14 +383,6 @@ public class StubMain {
 
 			// done with processing all the parameters.
 
-			
-			
-			
-			
-			
-			
-			
-			
 			// concatenate all the files to one single file
 
 			ConcatenatePartFiles concatationUtility = new ConcatenatePartFiles();
@@ -406,12 +413,6 @@ public class StubMain {
 			// compute the intersection of all the movies list for all fixed
 			// params.
 
-			
-			
-			
-			
-			
-			
 			LOG.info("Initiate movie list intersection process.");
 			ListIntersection intersectionInstance = new ListIntersection();
 
@@ -432,9 +433,10 @@ public class StubMain {
 				allParamsArray[in] = next;
 				in++;
 			}
-	
-			LOG.info("Number of source files whose intersection is to be computed: " + allParamsArray.length);
-			
+
+			LOG.info("Number of source files whose intersection is to be computed: "
+					+ allParamsArray.length);
+
 			if (allParamsArray.length >= 2) {
 
 				// if (allParamsArray.length == 2) {
@@ -444,35 +446,36 @@ public class StubMain {
 				// concatenate 1 and 2
 
 				LOG.info("This is more than or equal to 2.");
-				
+
 				java.nio.file.Path tempOutputDestination = (new File(commonOutputDirectory + "/"
 						+ "commonMoviesFile")).toPath();
-				
+
 				(new File(commonOutputDirectory + "/" + "moviesFile")).mkdir();
-				(new File(commonOutputDirectory + "/" + "moviesFile" + "/" + "finalMoviesFile")).createNewFile();
-				
+				(new File(commonOutputDirectory + "/" + "moviesFile" + "/" + "finalMoviesFile"))
+						.createNewFile();
+
 				java.nio.file.Path permOutputDestination = (new File(commonOutputDirectory + "/"
 						+ "moviesFile" + "/" + "finalMoviesFile")).toPath();
 
 				LOG.info("Intersect first and second to temp.");
-				
+
 				intersectionInstance.writeIntersectionToThirdFile(commonOutputDirectory + "/"
 						+ allParamsArray[0] + "/" + "combinedOutput", commonOutputDirectory + "/"
 						+ allParamsArray[1] + "/" + "combinedOutput",
 						tempOutputDestination.toString());
 
 				LOG.info("Intersecttion of first and second to temp complete.");
-				
+
 				if (allParamsArray.length == 2) {
 
 					LOG.info("Exactly two files.");
-					
+
 					CopyOption[] options = new CopyOption[] { StandardCopyOption.REPLACE_EXISTING };
 
 					Files.copy(tempOutputDestination, permOutputDestination, options);
 
 					LOG.info("Done with computing intersection.");
-					
+
 					// we are done with the final file in the output
 					// destination.
 
@@ -485,16 +488,15 @@ public class StubMain {
 
 					// perform the above two steps for each param.
 
-					
 					LOG.info("More than two files.");
-					
+
 					for (int i = 2; i < allParamsArray.length; i++) {
 
 						// first write the intersection of the temp file and the
 						// param file
 						// to the final file
 
-						LOG.info("Combine "+ allParamsArray[i] + ".");
+						LOG.info("Combine " + allParamsArray[i] + ".");
 						intersectionInstance.writeIntersectionToThirdFile(
 								tempOutputDestination.toString(), commonOutputDirectory + "/"
 										+ allParamsArray[i] + "/" + "combinedOutput",
@@ -504,8 +506,8 @@ public class StubMain {
 
 						Files.copy(permOutputDestination, tempOutputDestination,
 								new CopyOption[] { StandardCopyOption.REPLACE_EXISTING });
-						
-						LOG.info("Combined "+ allParamsArray[i] + ".");
+
+						LOG.info("Combined " + allParamsArray[i] + ".");
 					}
 
 					// copy merged file (permOutputDestination back to
@@ -521,7 +523,8 @@ public class StubMain {
 
 			} else {
 
-				// size is one just transfer the one file to the final output and we are done.
+				// size is one just transfer the one file to the final output
+				// and we are done.
 				java.nio.file.Path firstParamDestination = (new File(commonOutputDirectory + "/"
 						+ allParamsArray[0] + "/" + "combinedOutput")).toPath();
 				java.nio.file.Path permOutputDestination = (new File(commonOutputDirectory + "/"
@@ -531,80 +534,70 @@ public class StubMain {
 						new CopyOption[] { StandardCopyOption.REPLACE_EXISTING });
 			}
 
-			
 			// MOVIE INTERSECTION COMPLETED
-			
-			
-			
-			
-			
-			
-			// execute the final job
-			
-			// on genre, we have movie,genre pairs so given a movie set, we need to find the 
-			// frequency of genre.
-			
 
-			
+			// execute the final job
+
+			// on genre, we have movie,genre pairs so given a movie set, we need
+			// to find the
+			// frequency of genre.
+
 			LOG.info("Start final run!");
-			  boolean jsonKeyasKey=true; 
-			  Configuration finalConf = new Configuration();
-			  
-			  // create a string array by reading the lines of the final output.
-			  
-			  LinkedList<String> allMovies = new LinkedList<>();
-			  Scanner intersectionOutputReader = new Scanner((new File(commonOutputDirectory + "/"
-						+ "moviesFile" + "/" + "finalMoviesFile")));
-			  while(intersectionOutputReader.hasNextLine()){
-				  
-				  String nextLine = intersectionOutputReader.nextLine();
-				  allMovies.add(nextLine);
-				}
-			  intersectionOutputReader.close();
-			  
-			  String[] entireArray = new String[allMovies.size()];
-			  
-			  int writeIndex=0;
-			  for(String each: allMovies){
-				  entireArray[writeIndex]=each;
-				  writeIndex++;
-			  }
-			  LOG.info("Read the movie list into an array.");
-			  
-			  finalConf.setStrings("fixedParam", entireArray);
-			  
-			  // if true, we are operating on the key as opposed to value.
-			  finalConf.setBoolean("jsonKeyasKey", false); 
-			  // writes frequency if true
-			  finalConf.setBoolean("writeFrequencyOrValue", true);
-			  
-			  LOG.info("Preparing the final job.");
-			  Job finalJob = new Job(finalConf);
-			  finalJob.setJarByClass(StubMain.class);
-			  finalJob.setJobName("FinalFrequency");
-			  
-			  // the sample text file 
-			  FileInputFormat.addInputPath(finalJob, new Path(commonOutputDirectory + "/"
-						+ "moviesFile"));
-			  
-			  // the output path 
-			  
-			  FileOutputFormat.setOutputPath(finalJob, new Path(commonOutputDirectory + "/" + "finalOutput"));
-			  
-			  finalJob.setMapperClass(StubMapper.class);
-			  finalJob.setReducerClass(StubReducer.class);
-			  finalJob.setOutputKeyClass(Text.class);
-			  finalJob.setOutputValueClass(Text.class);
-			  LOG.info("Final job prepared. Execute the final job"); 
-			  
-			  finalJob.waitForCompletion(true);
-			 
-			  LOG.info("Final job complete.");
-			
-			
-			
-			
-			
+			boolean jsonKeyasKey = true;
+			Configuration finalConf = new Configuration();
+
+			// create a string array by reading the lines of the final output.
+
+			LinkedList<String> allMovies = new LinkedList<>();
+			Scanner intersectionOutputReader = new Scanner((new File(commonOutputDirectory + "/"
+					+ "moviesFile" + "/" + "finalMoviesFile")));
+			while (intersectionOutputReader.hasNextLine()) {
+
+				String nextLine = intersectionOutputReader.nextLine();
+				allMovies.add(nextLine);
+			}
+			intersectionOutputReader.close();
+
+			String[] entireArray = new String[allMovies.size()];
+
+			int writeIndex = 0;
+			for (String each : allMovies) {
+				entireArray[writeIndex] = each;
+				writeIndex++;
+			}
+			LOG.info("Read the movie list into an array.");
+
+			finalConf.setStrings("fixedParam", entireArray);
+
+			// if true, we are operating on the key as opposed to value.
+			finalConf.setBoolean("jsonKeyasKey", false);
+			// writes frequency if true
+			finalConf.setBoolean("writeFrequencyOrValue", true);
+
+			LOG.info("Preparing the final job.");
+			Job finalJob = new Job(finalConf);
+			finalJob.setJarByClass(StubMain.class);
+			finalJob.setJobName("FinalFrequency");
+
+			// the sample text file
+			FileInputFormat.addInputPath(finalJob, new Path(commonOutputDirectory + "/"
+					+ "moviesFile"));
+
+			// the output path
+
+			FileOutputFormat.setOutputPath(finalJob, new Path(commonOutputDirectory + "/"
+					+ "finalOutput"));
+
+			finalJob.setMapperClass(StubMapper.class);
+			finalJob.setReducerClass(StubReducer.class);
+			finalJob.setOutputKeyClass(Text.class);
+			finalJob.setOutputValueClass(Text.class);
+			LOG.info("Final job prepared. Execute the final job");
+
+			finalJob.waitForCompletion(true);
+
+			LOG.info("Final job complete.");
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

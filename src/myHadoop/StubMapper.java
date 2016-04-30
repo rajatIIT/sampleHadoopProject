@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
@@ -16,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 	private static final int MISSING = 9999;
-
+	private static final Log LOG = LogFactory.getLog(StubMapper.class);
 	@Override
 	public void map(LongWritable key, Text value, Context context)
 			throws IOException, InterruptedException {
@@ -26,6 +28,7 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 		// perform a context write of Text,Text.
 		
 		String[] stringArr = context.getConfiguration().getStrings("fixedParam");
+		stringArr=StubMain.transferArray;
 		
 		// TODO: provide support for multiple parameters.
 		
@@ -41,6 +44,7 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 		if(jsonkeyaskey){
 		
 		//	if(keyValueArray[0].equals(fixedParam)){
+			
 			if(   checkForMultipleValues(keyValueArray[0],stringArr) ){
 			if(writeFrequency){
 				// count the frequency of occurences.
@@ -83,6 +87,7 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 	
 	public boolean checkForMultipleValues(String valueToCheck, String[] array) {
 		for(String each : array){
+	//		LOG.info("Check " + valueToCheck + " against " + each + ".");
 			if(valueToCheck.equals(each))
 				return true;
 		}
