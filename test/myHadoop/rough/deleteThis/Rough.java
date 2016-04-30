@@ -15,32 +15,52 @@ public class Rough {
 	public static void main(String[] args){
 		
 		
+		
+		String testString = "\"Entertainment Tonight\" (1981) {(2014-07-22)}  [Themselves]";
+		
+		System.out.println((testString.substring(
+				testString.indexOf("\"") + 1, 
+				testString.indexOf("\"", testString.indexOf("\"") + 1)
+				)));
+		System.out.println(testString.split("[(]")[0].trim());
+		
+		
+		
+		
+	}
+	
+	public void moreOnGenrePattern() {
+		
+		
 		// find the regex pattern for genre 
 		
 		
-		// (.+) (\t)+(.+) a^Ia
+				// (.+) (\t)+(.+) a^Ia
+				
+				String positive1 = "MV: The Miller and the Sweep (1897/I)";
+				String negative1 = "MV:			";
+				 
+				// movie pattern : MV 
+				Pattern genrePattern = Pattern.compile("MV:.+");
+				 
+				Matcher positiveMatcher = genrePattern.matcher(positive1);
+				Matcher negativeMatcher = genrePattern.matcher(negative1);
+				
+				if(positiveMatcher.matches()){
+					System.out.println("works! 1");
+				}
+				
+				if(!negativeMatcher.matches()){
+					System.out.println("works!");
+				}
+				
+				String currentMovie = positive1.split(":")[(positive1.split(":")).length -1].trim();
+				System.out.println(currentMovie);
+				
 		
-		String positive1 = "MV: The Miller and the Sweep (1897/I)";
-		String negative1 = "MV:			";
-		 
-		// movie pattern : MV 
-		Pattern genrePattern = Pattern.compile("MV:.+");
-		 
-		Matcher positiveMatcher = genrePattern.matcher(positive1);
-		Matcher negativeMatcher = genrePattern.matcher(negative1);
-		
-		if(positiveMatcher.matches()){
-			System.out.println("works! 1");
-		}
-		
-		if(!negativeMatcher.matches()){
-			System.out.println("works!");
-		}
-		
-		String currentMovie = positive1.split(":")[(positive1.split(":")).length -1].trim();
-		System.out.println(currentMovie);
 		
 	}
+		
 	
 	
 	public void testGenrePattern() {
