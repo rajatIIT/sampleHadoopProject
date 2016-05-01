@@ -542,6 +542,18 @@ public class StubMain {
 			// to find the
 			// frequency of genre.
 
+			
+			/**
+			 * 
+			 * In the case of genre we have a list of movies 
+			 * 
+			 * and a genre file which contains entries of format (movie, genre)
+			 * 
+			 * 
+			 */
+			
+			
+			
 			LOG.info("Start final run!");
 			boolean jsonKeyasKey = true;
 			Configuration finalConf = new Configuration();
@@ -568,11 +580,14 @@ public class StubMain {
 			LOG.info("Read the movie list into an array.");
 
 			finalConf.setStrings("fixedParam", entireArray);
+			transferArray=entireArray;
 
 			// if true, we are operating on the key as opposed to value.
-			finalConf.setBoolean("jsonKeyasKey", false);
+			finalConf.setBoolean("jsonKeyasKey", true);
 			// writes frequency if true
-			finalConf.setBoolean("writeFrequencyOrValue", true);
+			finalConf.setBoolean("writeFrequencyOrValue", false);
+			finalConf.setBoolean("writeKeyOrNot", true);
+			finalConf.setBoolean("writeJSONCheck", false);
 
 			LOG.info("Preparing the final job.");
 			Job finalJob = new Job(finalConf);
@@ -580,13 +595,13 @@ public class StubMain {
 			finalJob.setJobName("FinalFrequency");
 
 			// the sample text file
-			FileInputFormat.addInputPath(finalJob, new Path(commonOutputDirectory + "/"
-					+ "moviesFile"));
+	//		FileInputFormat.addInputPath(finalJob, new Path(commonOutputDirectory + "/" + "moviesFile"));
 
+			FileInputFormat.addInputPath(finalJob, new Path(genresPath));
+			
 			// the output path
 
-			FileOutputFormat.setOutputPath(finalJob, new Path(commonOutputDirectory + "/"
-					+ "finalOutput"));
+			FileOutputFormat.setOutputPath(finalJob, new Path(commonOutputDirectory + "/" + "finalOutput"));
 
 			finalJob.setMapperClass(StubMapper.class);
 			finalJob.setReducerClass(StubReducer.class);

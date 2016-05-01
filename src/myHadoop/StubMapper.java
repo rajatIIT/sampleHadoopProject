@@ -13,12 +13,15 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.json.WriterBasedJsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 	private static final int MISSING = 9999;
 	private static final Log LOG = LogFactory.getLog(StubMapper.class);
+	boolean writeJSONCheck;
+	
 	@Override
 	public void map(LongWritable key, Text value, Context context)
 			throws IOException, InterruptedException {
@@ -39,13 +42,13 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 		
 		boolean jsonkeyaskey = context.getConfiguration().getBoolean("jsonKeyasKey", true);
 		boolean writeFrequency = context.getConfiguration().getBoolean("writeFrequencyOrValue", false);
-		
+		writeJSONCheck = context.getConfiguration().getBoolean("writeJSONCheck",false);
 		
 		if(jsonkeyaskey){
 		
 		//	if(keyValueArray[0].equals(fixedParam)){
 			
-			if(   checkForMultipleValues(keyValueArray[0],stringArr) ){
+			if(checkForMultipleValues(keyValueArray[0],stringArr) ){
 			if(writeFrequency){
 				// count the frequency of occurences.
 				context.write(new Text(keyValueArray[0]), new Text(1 + ""));	
@@ -87,16 +90,20 @@ public class StubMapper extends Mapper<LongWritable, Text, Text, Text> {
 	
 	public boolean checkForMultipleValues(String valueToCheck, String[] array) {
 		for(String each : array){
-	//		LOG.info("Check " + valueToCheck + " against " + each + ".");
+			if(writeJSONCheck)
+				LOG.info("Check " + valueToCheck + " against " + each + ".");
+			try {
 			if(valueToCheck.equals(each))
 				return true;
+			} catch (NullPointerException nex){
+				return false;
+			}
 		}
 		return false;
 	}
 	
 	
 	public String[] getKeyAndValueFromJson(String jsonString) {
-	
 		ObjectMapper  mapper = new ObjectMapper();
 		String[] keyValueArr = new String[2];
 		JsonNode rootNode;
