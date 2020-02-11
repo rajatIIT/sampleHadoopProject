@@ -1,0 +1,40 @@
+{
+  "friends": [
+    {
+      "id": 0,
+      "name": "Pearl",
+      "rooms": [
+        "Oxygen",
+        "Juggle",
+        "Hitachi"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Hampton",
+      "rooms": [
+        "Shocker",
+        "Giver",
+        "Shine"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Barlow",
+      "rooms": [
+        "Strongy",
+        "Brilliant",
+        "Chatty"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Wilcox",
+      "rooms": [
+        "Premier",
+        "Bonton",
+        "Magnum"
+      ]
+    }
+  ]
+}
