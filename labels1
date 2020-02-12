@@ -1,0 +1,59 @@
+{
+  "labels": [
+    {
+      "id": 0,
+      "name": "Joanna",
+      "sublabels": [
+        "Imogene",
+        "Carney",
+        "Lupe",
+        "Traci",
+        "Gates"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Knight",
+      "sublabels": [
+        "Gayle",
+        "Camacho",
+        "Christi",
+        "Violet",
+        "Wanda"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Lauri",
+      "sublabels": [
+        "Roberta",
+        "Gracie",
+        "Hinton",
+        "Carmela",
+        "Knox"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Ophelia",
+      "sublabels": [
+        "Trevino",
+        "Salazar",
+        "Dorothea",
+        "Yates",
+        "Ines"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Kathrine",
+      "sublabels": [
+        "Marie",
+        "Jennifer",
+        "Velazquez",
+        "Anita",
+        "Garrett"
+      ]
+    }
+  ]
+}
