@@ -1,0 +1,59 @@
+{
+  "labels": [
+    {
+      "id": 0,
+      "name": "Patrice",
+      "sublabels": [
+        "Thompson",
+        "Oneal",
+        "Simon",
+        "Estrada",
+        "Graciela"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Rae",
+      "sublabels": [
+        "Beverly",
+        "Wiley",
+        "Eva",
+        "Velasquez",
+        "Robbie"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Della",
+      "sublabels": [
+        "Diana",
+        "Rosa",
+        "Avery",
+        "Valentine",
+        "Earlene"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Vicky",
+      "sublabels": [
+        "Rasmussen",
+        "Smith",
+        "Hoover",
+        "Russell",
+        "Case"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Bush",
+      "sublabels": [
+        "Navarro",
+        "Lopez",
+        "Whitley",
+        "Yesenia",
+        "Irene"
+      ]
+    }
+  ]
+}
