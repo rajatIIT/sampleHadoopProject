@@ -4,7 +4,7 @@
   "sublabels": [
             { "name": "School of AI", "href": "http://www.google.com" },
             { "name": "School of Autonomous Systems", "href": "http://www.google.com" },
-            { "name": "School of Business", "href": "http://www.google.com" },
+            { "name": "School of Business", "href": "http://www.google.com" }
             ],
   "name": "Udacity Schools"
 },
@@ -12,7 +12,7 @@
   "sublabels" : [
             { "name": "Artificial Intelligence", "href": "http://www.google.com" },
             { "name": "Deep Learning", "href": "http://www.google.com" },
-            { "name": "Digital Marketing", "href": "http://www.google.com" },
+            { "name": "Digital Marketing", "href": "http://www.google.com" }
             ],
   "name": "Only at Udacity"
 }
